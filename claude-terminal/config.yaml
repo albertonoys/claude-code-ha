@@ -7,9 +7,8 @@ init: false
 
 # Supported architectures
 arch:
-  - aarch64
   - amd64
-  - armv7
+  - aarch64
 
 # External resources
 url: "https://github.com/esjavadex/claude-code-ha"

@@ -1,7 +1,6 @@
 build_from:
-  aarch64: ghcr.io/home-assistant/aarch64-base:3.19@sha256:21337bf37e6bc1bbc608bd2c86ca2c901fe200393d7ba629e0de4dce7a31241d
   amd64: ghcr.io/home-assistant/amd64-base:3.19@sha256:064e13687f5d2b839c2f7304ae57c71fed4d60f5311e8c8b11ae75fa32c11c6f
-  armv7: ghcr.io/home-assistant/armv7-base:3.19@sha256:6814057a42695dbc54737373de7c17bf0a0cd78afe4ce47e59c50de67a5e2e94
+  aarch64: ghcr.io/home-assistant/aarch64-base:3.19@sha256:21337bf37e6bc1bbc608bd2c86ca2c901fe200393d7ba629e0de4dce7a31241d
 
 labels:
   org.opencontainers.image.title: "Home Assistant Add-on: Claude Terminal"

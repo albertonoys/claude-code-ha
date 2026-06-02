@@ -36,9 +36,6 @@ ARG TARGETARCH
 RUN case "${TARGETARCH}" in \
         amd64)   HA_ARCH="amd64"; HA_CLI_SHA256="46cf957ed8332dc167e13dde0f8fffe9f3553e4ce10a2987c10e3f74e20f57e3" ;; \
         arm64)   HA_ARCH="aarch64"; HA_CLI_SHA256="fd7359ea9ae6e108c5b7769f1db699edf09ab9dd19aded2cbb12172af4c96cd5" ;; \
-        arm/v7)  HA_ARCH="armv7"; HA_CLI_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
-        arm/v6)  HA_ARCH="armhf"; HA_CLI_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
-        386)     HA_ARCH="i386"; HA_CLI_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
         *)       echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
     esac && \
     echo "Installing Home Assistant CLI ${HA_CLI_VERSION} for ${HA_ARCH}..." && \
@@ -54,8 +51,6 @@ ARG GH_VERSION=2.93.0
 RUN case "${TARGETARCH}" in \
         amd64)   GH_ARCH="amd64"; GH_SHA256="02d1290eba130e0b896f3709ffff22e1c75a51475ddb70476a85abc6b5807af0" ;; \
         arm64)   GH_ARCH="arm64"; GH_SHA256="c55feb33684abba57e9909737340d5b39282257c0363e1edde6785ac4a413be7" ;; \
-        arm/v7)  GH_ARCH="armv7"; GH_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
-        386)     GH_ARCH="386"; GH_SHA256="701192266df5009821cd50047ae6227c3f7e4fc2353aa4ff6687a284c5d3a56e" ;; \
         *)       echo "Unsupported architecture for gh: ${TARGETARCH}" && exit 1 ;; \
     esac && \
     echo "Installing GitHub CLI v${GH_VERSION} for ${GH_ARCH}..." && \
