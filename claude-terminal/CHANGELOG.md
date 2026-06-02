@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.0.11-pinned.1
+
+### 🔒 Security - Pinned Build with Checksum Verification
+- **Upstream base commit**: `823aa8708793b7ec749251b623ba652a2af1c9ae` (ESJavadex/claude-code-ha main)
+- **Base image pinning**: Alpine base images pinned by digest (tag 3.19)
+  - amd64: `ghcr.io/home-assistant/amd64-base:3.19@sha256:064e13687f5d2b839c2f7304ae57c71fed4d60f5311e8c8b11ae75fa32c11c6f`
+  - aarch64: `ghcr.io/home-assistant/aarch64-base:3.19@sha256:21337bf37e6bc1bbc608bd2c86ca2c901fe200393d7ba629e0de4dce7a31241d`
+  - armv7: `ghcr.io/home-assistant/armv7-base:3.19@sha256:6814057a42695dbc54737373de7c17bf0a0cd78afe4ce47e59c50de67a5e2e94`
+- **Home Assistant CLI**: Pinned to version `5.1.0` with SHA256 verification
+  - amd64: `46cf957ed8332dc167e13dde0f8fffe9f3553e4ce10a2987c10e3f74e20f57e3`
+  - aarch64: `fd7359ea9ae6e108c5b7769f1db699edf09ab9dd19aded2cbb12172af4c96cd5`
+  - armv7: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+- **GitHub CLI**: Pinned to version `2.93.0` with SHA256 verification
+  - amd64: `02d1290eba130e0b896f3709ffff22e1c75a51475ddb70476a85abc6b5807af0`
+  - arm64: `c55feb33684abba57e9909737340d5b39282257c0363e1edde6785ac4a413be7`
+  - armv7: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+  - 386: `701192266df5009821cd50047ae6227c3f7e4fc2353aa4ff6687a284c5d3a56e`
+- **Claude Code CLI**: Unchanged (uses official `claude.ai/install.sh` script)
+- **Privileges**: Unchanged from upstream (no least-privilege modifications)
+- **Operator actions required**: Turn off "Auto update" in add-on page; review upstream changes before merging
+
 ## 2.0.11
 
 ### ✨ New Feature - Optional Persistent Claude Code Override
@@ -484,7 +505,7 @@ This is a common Express.js gotcha - middleware order matters! Static file middl
 
 ## 1.1.1
 
-### 🐛 Bug Fixes  
+### 🐛 Bug Fixes
 - **Fixed session picker not found**: Moved scripts from `/config/scripts/` to `/opt/scripts/` to avoid volume mapping conflicts
 - **Fixed authentication persistence**: Improved credential directory setup with proper symlink recreation
 - **Enhanced credential management**: Added proper file permissions (600) and logging for debugging
@@ -496,7 +517,7 @@ This is a common Express.js gotcha - middleware order matters! Static file middl
 - **Interactive Session Picker**: New menu-driven interface for choosing Claude session types
   - 🆕 New interactive session (default)
   - ⏩ Continue most recent conversation (-c)
-  - 📋 Resume from conversation list (-r) 
+  - 📋 Resume from conversation list (-r)
   - ⚙️ Custom Claude command with manual flags
   - 🐚 Drop to bash shell
   - ❌ Exit option

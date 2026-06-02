@@ -30,39 +30,38 @@ RUN (curl -fsSL https://claude.ai/install.sh | bash \
     || npm install -g @anthropic-ai/claude-code
 
 # Install Home Assistant CLI (ha command)
-# Download appropriate binary based on build architecture
-# Automatically fetches the latest version from GitHub
+# Pinned version with checksum verification
+ARG HA_CLI_VERSION=5.1.0
 ARG TARGETARCH
 RUN case "${TARGETARCH}" in \
-        amd64)   HA_ARCH="amd64" ;; \
-        arm64)   HA_ARCH="aarch64" ;; \
-        arm/v7)  HA_ARCH="armv7" ;; \
-        arm/v6)  HA_ARCH="armhf" ;; \
-        386)     HA_ARCH="i386" ;; \
+        amd64)   HA_ARCH="amd64"; HA_CLI_SHA256="46cf957ed8332dc167e13dde0f8fffe9f3553e4ce10a2987c10e3f74e20f57e3" ;; \
+        arm64)   HA_ARCH="aarch64"; HA_CLI_SHA256="fd7359ea9ae6e108c5b7769f1db699edf09ab9dd19aded2cbb12172af4c96cd5" ;; \
+        arm/v7)  HA_ARCH="armv7"; HA_CLI_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
+        arm/v6)  HA_ARCH="armhf"; HA_CLI_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
+        386)     HA_ARCH="i386"; HA_CLI_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
         *)       echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
     esac && \
-    echo "Fetching latest Home Assistant CLI version..." && \
-    HA_VERSION=$(curl -fsSL https://api.github.com/repos/home-assistant/cli/releases/latest | jq -r '.tag_name') && \
-    echo "Installing Home Assistant CLI ${HA_VERSION} for ${HA_ARCH}..." && \
+    echo "Installing Home Assistant CLI ${HA_CLI_VERSION} for ${HA_ARCH}..." && \
     curl -fsSL -o /usr/bin/ha \
-        "https://github.com/home-assistant/cli/releases/download/${HA_VERSION}/ha_${HA_ARCH}" && \
+        "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${HA_ARCH}" && \
+    echo "${HA_CLI_SHA256}  /usr/bin/ha" | sha256sum -c - && \
     chmod +x /usr/bin/ha && \
-    echo "Home Assistant CLI ${HA_VERSION} installed successfully"
+    echo "Home Assistant CLI ${HA_CLI_VERSION} installed successfully"
 
 # Install GitHub CLI (gh command)
-# Download appropriate binary based on build architecture
+# Pinned version with checksum verification
+ARG GH_VERSION=2.93.0
 RUN case "${TARGETARCH}" in \
-        amd64)   GH_ARCH="amd64" ;; \
-        arm64)   GH_ARCH="arm64" ;; \
-        arm/v7)  GH_ARCH="armv7" ;; \
-        386)     GH_ARCH="386" ;; \
+        amd64)   GH_ARCH="amd64"; GH_SHA256="02d1290eba130e0b896f3709ffff22e1c75a51475ddb70476a85abc6b5807af0" ;; \
+        arm64)   GH_ARCH="arm64"; GH_SHA256="c55feb33684abba57e9909737340d5b39282257c0363e1edde6785ac4a413be7" ;; \
+        arm/v7)  GH_ARCH="armv7"; GH_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" ;; \
+        386)     GH_ARCH="386"; GH_SHA256="701192266df5009821cd50047ae6227c3f7e4fc2353aa4ff6687a284c5d3a56e" ;; \
         *)       echo "Unsupported architecture for gh: ${TARGETARCH}" && exit 1 ;; \
     esac && \
-    echo "Fetching latest GitHub CLI version..." && \
-    GH_VERSION=$(curl -fsSL https://api.github.com/repos/cli/cli/releases/latest | jq -r '.tag_name' | sed 's/^v//') && \
     echo "Installing GitHub CLI v${GH_VERSION} for ${GH_ARCH}..." && \
     curl -fsSL -o /tmp/gh.tar.gz \
         "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${GH_ARCH}.tar.gz" && \
+    echo "${GH_SHA256}  /tmp/gh.tar.gz" | sha256sum -c - && \
     tar -xzf /tmp/gh.tar.gz -C /tmp && \
     mv /tmp/gh_${GH_VERSION}_linux_${GH_ARCH}/bin/gh /usr/bin/gh && \
     chmod +x /usr/bin/gh && \
